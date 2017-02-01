@@ -7,6 +7,9 @@ import com.google.android.things.pio.GpioCallback;
 
 import java.io.IOException;
 
+/**
+ * HC-SR501
+ */
 class PirMotionSensor implements MotionSensor {
 
     private final Gpio bus;
