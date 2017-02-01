@@ -8,10 +8,12 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
+    <uses-library android:name="com.google.android.things" />
+
     <activity android:name=".AndroidThingsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
+        <category android:name="android.intent.category.IOT_LAUNCHER" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
