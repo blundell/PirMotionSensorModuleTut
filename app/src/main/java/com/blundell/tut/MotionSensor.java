@@ -1,6 +1,6 @@
 package com.blundell.tut;
 
-interface MovementSensor {
+interface MotionSensor {
 
     void startup();
 

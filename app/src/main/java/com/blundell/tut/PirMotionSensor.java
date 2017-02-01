@@ -7,28 +7,28 @@ import com.google.android.things.pio.GpioCallback;
 
 import java.io.IOException;
 
-class PirMovementSensor implements MovementSensor {
+class PirMotionSensor implements MotionSensor {
 
-    private final Gpio driver;
+    private final Gpio bus;
 
-    private final MovementSensor.Listener listener;
+    private final MotionSensor.Listener listener;
 
-    PirMovementSensor(Gpio driver, Listener listener) {
-        this.driver = driver;
+    PirMotionSensor(Gpio bus, Listener listener) {
+        this.bus = bus;
         this.listener = listener;
     }
 
     @Override
     public void startup() {
         try {
-            driver.setDirection(Gpio.DIRECTION_IN);
-            driver.setActiveType(Gpio.ACTIVE_HIGH);
-            driver.setEdgeTriggerType(Gpio.EDGE_RISING);
+            bus.setDirection(Gpio.DIRECTION_IN);
+            bus.setActiveType(Gpio.ACTIVE_HIGH);
+            bus.setEdgeTriggerType(Gpio.EDGE_RISING);
         } catch (IOException e) {
             throw new IllegalStateException("Sensor can't start - App is foobar'd", e);
         }
         try {
-            driver.registerGpioCallback(callback);
+            bus.registerGpioCallback(callback);
         } catch (IOException e) {
             throw new IllegalStateException("Sensor can't register callback - App is foobar'd", e);
         }
@@ -44,9 +44,9 @@ class PirMovementSensor implements MovementSensor {
 
     @Override
     public void shutdown() {
-        driver.unregisterGpioCallback(callback);
+        bus.unregisterGpioCallback(callback);
         try {
-            driver.close();
+            bus.close();
         } catch (IOException e) {
             Log.e("TUT", "Failed to shut down. You might get errors next time you try to start.", e);
         }
