@@ -9,21 +9,21 @@ import com.google.android.things.pio.PeripheralManagerService;
 
 import java.io.IOException;
 
-public class AndroidThingsActivity extends Activity implements MovementSensor.Listener {
+public class AndroidThingsActivity extends Activity implements MotionSensor.Listener {
 
-    private PirMovementSensor driver;
+    private PirMotionSensor motionSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         try {
-            Gpio gpioPin = new PeripheralManagerService().openGpio("BCM18");
-            driver = new PirMovementSensor(gpioPin, this);
+            Gpio bus = new PeripheralManagerService().openGpio("BCM18");
+            motionSensor = new PirMotionSensor(bus, this);
         } catch (IOException e) {
             throw new IllegalStateException("Can't open GPIO - can't create app.", e);
         }
-        driver.startup();
+        motionSensor.startup();
     }
 
     @Override
@@ -34,6 +34,6 @@ public class AndroidThingsActivity extends Activity implements MovementSensor.Li
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        driver.shutdown();
+        motionSensor.shutdown();
     }
 }
