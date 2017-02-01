@@ -17,13 +17,20 @@ public class AndroidThingsActivity extends Activity implements MotionSensor.List
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Gpio bus = openMotionSensorGpioBus();
+        motionSensor = new PirMotionSensor(bus, this);
+        motionSensor.startup();
+    }
+
+    private Gpio openMotionSensorGpioBus() {
+        Gpio bus;
         try {
-            Gpio bus = new PeripheralManagerService().openGpio("BCM18");
-            motionSensor = new PirMotionSensor(bus, this);
+            // BCM18 is the GPIO pin I have the sensor connected to on my raspberry pi
+            bus = new PeripheralManagerService().openGpio("BCM18");
         } catch (IOException e) {
             throw new IllegalStateException("Can't open GPIO - can't create app.", e);
         }
-        motionSensor.startup();
+        return bus;
     }
 
     @Override
