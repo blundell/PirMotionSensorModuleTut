@@ -40,7 +40,7 @@ public class AndroidThingsActivity extends Activity implements MotionSensor.List
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         motionSensor.shutdown();
+        super.onDestroy();
     }
 }
