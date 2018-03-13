@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class AndroidThingsActivity extends Activity implements MotionSensor.List
         Gpio bus;
         try {
             // BCM18 is the GPIO pin I have the sensor connected to on my raspberry pi
-            bus = new PeripheralManagerService().openGpio("BCM18");
+            bus = PeripheralManager.getInstance().openGpio("BCM18");
         } catch (IOException e) {
             throw new IllegalStateException("Can't open GPIO - can't create app.", e);
         }
